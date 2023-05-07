@@ -1,6 +1,8 @@
 package entidade;
 
 public class Autor {
+
+  private int codigo;
   
   private String nmAutor;
 
@@ -10,6 +12,19 @@ public class Autor {
 
   public Autor(String nmAutor){
     this.nmAutor = nmAutor;
+  }
+
+  public Autor(int codigo, String nmAutor){
+    this.codigo = codigo;
+    this.nmAutor = nmAutor;
+  }
+
+  public int getCodigo() {
+    return codigo;
+  }
+
+  public void setCodigo(int codigo) {
+    this.codigo = codigo;
   }
 
   public String getNmAutor() {
@@ -26,6 +41,11 @@ public class Autor {
 
   public void setIdadeAutor(String idadeAutor) {
     this.idadeAutor = idadeAutor;
+  }
+
+  @Override
+  public String toString() {
+    return this.codigo+";"+this.nmAutor;
   }
 
 }

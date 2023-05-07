@@ -20,7 +20,7 @@ public class Revista extends Acervo {
 
   @Override
   public String toString() {
-    return "REVISTA"+";"+getCodigo()+";"+getNome()+";"+getQtdPaginas()+";"+getEditora()+";"+tipoRevista.getCodigo();
+    return "REVISTA"+";"+getCodigo()+";"+getNome()+";"+getQtdPaginas()+";"+getEditora().getCodigo()+";"+tipoRevista.getCodigo();
   }
   
 }

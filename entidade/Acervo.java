@@ -1,5 +1,7 @@
 package entidade;
 
+import java.util.List;
+
 public abstract class Acervo {
   
   private int codigo;
@@ -9,6 +11,8 @@ public abstract class Acervo {
   private int qtdPaginas;
 
   private Editora editora;
+
+  private List<Aluguel> listaAluguel;
 
   public int getCodigo() {
     return codigo;
@@ -40,6 +44,14 @@ public abstract class Acervo {
 
   public void setQtdPaginas(int qtdPaginas) {
     this.qtdPaginas = qtdPaginas;
+  }
+
+  public List<Aluguel> getListaAluguel() {
+    return listaAluguel;
+  }
+
+  public void setListaAluguel(List<Aluguel> listaAluguel) {
+    this.listaAluguel = listaAluguel;
   }
 
   public abstract void imprimirInformacao();

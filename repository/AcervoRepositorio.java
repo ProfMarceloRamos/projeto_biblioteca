@@ -13,10 +13,16 @@ import entidade.Editora;
 import entidade.Livro;
 import entidade.Revista;
 import enumeration.TipoRevistaEnum;
+import service.AutorService;
+import service.EditoraService;
 
-public class AcervoRepository {
+public class AcervoRepositorio {
   
   private final static String arquivo_acervo = "C:\\Estudos\\Aulas\\Lógica com Java\\Março\\git\\projeto_biblioteca\\arquivos\\acervo.bib";
+
+  private AutorService autorService;
+  
+  private EditoraService editoraService;
 
   private List<Acervo> listaAcervo;
 
@@ -25,6 +31,24 @@ public class AcervoRepository {
       listaAcervo = new ArrayList<Acervo>();
     }
     return listaAcervo;
+  }
+
+  private void limparListaAcervo(){
+    listaAcervo = new ArrayList<Acervo>();
+  }
+
+  public AutorService getAutorService() {
+    if(autorService == null){
+      autorService = new AutorService();
+    }
+    return autorService;
+  }
+
+  public EditoraService getEditoraService() {
+    if(editoraService == null){
+      editoraService = new EditoraService();
+    }
+    return editoraService;
   }
 
   public void criarAcervo(Acervo acr){
@@ -41,8 +65,9 @@ public class AcervoRepository {
   }
 
   public int recuperarUltimoCodigoAcervo(){
+    recuperarAcervos();
     if(getListaAcervo().size() == 0){
-      return 1;
+      return 0;
     }
 
     return getListaAcervo().get(getListaAcervo().size() - 1).getCodigo();
@@ -55,6 +80,8 @@ public class AcervoRepository {
 
   private void recuperarAcervos(){
     File arq = new File(arquivo_acervo);
+
+    limparListaAcervo();
 
     try {
       Scanner sc = new Scanner(arq);
@@ -72,10 +99,14 @@ public class AcervoRepository {
           case "LIVRO":
             Livro livro = new Livro();
             livro.setCodigo(new Integer(strVt[1]));
-            Autor autor = new Autor(strVt[5]);
+            
+            Autor autor = getAutorService().recuperarAutor(new Integer(strVt[5]));
+            if(autor == null){
+              return;
+            }
             livro.setAutor(autor);
-            editora = new Editora();
-            editora.setNmEditora(strVt[4]);
+
+            editora = getEditoraService().recuperarEditora(new Integer(strVt[4]));
             livro.setEditora(editora);
             livro.setNome(strVt[2]);
             livro.setQtdPaginas(new Integer(strVt[3]));
@@ -84,13 +115,15 @@ public class AcervoRepository {
           case "REVISTA":
             Revista revista = new Revista();
             revista.setCodigo(new Integer(strVt[1]));
-            editora = new Editora();
-            editora.setNmEditora(strVt[4]);
+            
+            editora = getEditoraService().recuperarEditora(new Integer(strVt[4]));
+            
             revista.setEditora(editora);
             revista.setNome(strVt[2]);
             revista.setQtdPaginas(new Integer(strVt[3]));
             TipoRevistaEnum tipoRevista = TipoRevistaEnum.valueOf(new Integer(strVt[5]));
             revista.setTipoRevista(tipoRevista);
+            getListaAcervo().add(revista);
             break;
         }
 
@@ -101,10 +134,20 @@ public class AcervoRepository {
     } catch (IOException e) {
       System.out.println("Não foi possível ler o arquivo de acervo!");
     } catch (NumberFormatException e) {
-      System.out.println("Não foi possível transformar o valor para um número!");
+      System.out.println("Não foi possível transformar o valor para um número! - Acervo");
     } catch(Exception e){
       e.printStackTrace();
     }
+  }
+
+  public Acervo recuperarAcervo(int codigo){
+    List<Acervo> listaAcervo = retornaListaAcervo();
+    for (Acervo acervo : listaAcervo) {
+      if(acervo.getCodigo() == codigo){
+        return acervo;
+      }
+    }
+    return null;
   }
 
 }

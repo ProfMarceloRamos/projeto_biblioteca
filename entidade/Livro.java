@@ -18,7 +18,7 @@ public class Livro extends Acervo {
 
   @Override
   public String toString() {
-    return "LIVRO"+";"+getCodigo()+";"+getNome()+";"+getQtdPaginas()+";"+getEditora()+";"+autor;
+    return "LIVRO"+";"+getCodigo()+";"+getNome()+";"+getQtdPaginas()+";"+getEditora().getCodigo()+";"+autor.getCodigo();
   }
 
 }

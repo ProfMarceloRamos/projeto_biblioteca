@@ -34,4 +34,8 @@ public class UsuarioService {
     return getRepositorio().retornaListaUsuario();
   }
 
+  public Usuario recuperarUsuario(int codigo){
+    return getRepositorio().recuperarUsuario(codigo);
+  }
+
 }

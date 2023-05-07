@@ -3,15 +3,15 @@ package service;
 import java.util.List;
 
 import entidade.Acervo;
-import repository.AcervoRepository;
+import repository.AcervoRepositorio;
 
 public class AcervoService {
 
-  private AcervoRepository repository;
+  private AcervoRepositorio repository;
 
-  private AcervoRepository getRepository() {
+  private AcervoRepositorio getRepository() {
     if(repository == null){
-      repository = new AcervoRepository();
+      repository = new AcervoRepositorio();
     }
     return repository;
   }
@@ -26,6 +26,10 @@ public class AcervoService {
 
   public List<Acervo> retornaListaAcervo(){
     return getRepository().retornaListaAcervo();
+  }
+
+  public Acervo recuperarAcervo(int codigo){
+    return getRepository().recuperarAcervo(codigo);
   }
 
 }

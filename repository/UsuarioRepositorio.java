@@ -22,6 +22,10 @@ public class UsuarioRepositorio {
     return listaUsuario;
   }
 
+  private void limparListaUsuario(){
+    listaUsuario = new ArrayList<Usuario>();
+  }
+
   public void criarUsuario(Usuario usr){
     File arq = new File(arquivo_usuario);
 
@@ -37,6 +41,8 @@ public class UsuarioRepositorio {
 
   private void recuperarUsuarios(){
     File arq = new File(arquivo_usuario);
+
+    limparListaUsuario();
 
     try {
       Scanner sc = new Scanner(arq);
@@ -61,14 +67,15 @@ public class UsuarioRepositorio {
     } catch (IOException e) {
       System.out.println("Não foi possível ler o arquivo de usuário!");
     } catch (NumberFormatException e) {
-      System.out.println("Não foi possível transformar o valor para um número!");
+      System.out.println("Não foi possível transformar o valor para um número! - Usuário");
     }
   }
 
   public int recuperarUltimaCodigoUsuario(){
+    recuperarUsuarios();
 
     if(getListaUsuario().size() == 0){
-      return 1;
+      return 0;
     }
 
     return getListaUsuario().get(getListaUsuario().size() - 1).getCodigo();
@@ -78,6 +85,16 @@ public class UsuarioRepositorio {
   public List<Usuario> retornaListaUsuario(){
     recuperarUsuarios();
     return getListaUsuario();
+  }
+
+  public Usuario recuperarUsuario(int codigo){
+    List<Usuario> listaUsuario = retornaListaUsuario();
+    for (Usuario usuario : listaUsuario) {
+      if(usuario.getCodigo() == codigo){
+        return usuario;
+      }
+    }
+    return null;
   }
 
 }

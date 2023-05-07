@@ -51,15 +51,15 @@ public class Principal {
 
     impressao(revista);
 
-    Aluguel aluguel = new Aluguel();
-    aluguel.setAcervo(r);
+    // Aluguel aluguel = new Aluguel();
+    // aluguel.setAcervo(r);
 
     LocalDate dtEmprestimo = LocalDate.now();
 
-    aluguel.setDtEmprestimo(dtEmprestimo);
+    //aluguel.setDtEmprestimo(dtEmprestimo);
 
     LocalDate dtPrevistaDevolucao = dtEmprestimo.plusDays(10);
-    aluguel.setDtPrevistaDevolucao(dtPrevistaDevolucao);
+    //aluguel.setDtPrevistaDevolucao(dtPrevistaDevolucao);
 
     Usuario usrMarcelo = criarNovoUsuario("Marcelo");
     Usuario usrMaria = criarNovoUsuario("Maria");
